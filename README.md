@@ -20,39 +20,39 @@ dbms.security.procedures.allowlist=apoc.*
 
 4. Clone this repository:
 
-   ```
-   git clone https://github.com/courtofdreams/llm-kag-communitynote.git
-   cd llm-kag-communitynote
-   ```
+```
+git clone https://github.com/courtofdreams/llm-kag-communitynote.git
+cd llm-kag-communitynote
+```
 5. Create and activate a virtual environment:
 
-   ```
-   # Create a virtual environment
-   python -m venv venv
+```
+# Create a virtual environment
+python -m venv venv
 
-   # Activate the virtual environment
-   # On Windows:
-   venv\Scripts\activate
+# Activate the virtual environment
+# On Windows:
+venv\Scripts\activate
 
-   # On macOS/Linux:
-   source venv/bin/activate
-   ```
+# On macOS/Linux:
+source venv/bin/activate
+```
 
 
 6. Install the required dependencies:
 
-   ```
-   pip install -r requirements.txt
-   ```
+```
+pip install -r requirements.txt
+```
 
 4. Create a `.env` file in the project root with:
 
-   ```
-    OPENAI_API_KEY=your-openai-api-key
-    NEO4J_URI=neo4j_uri ex : bolt://localhost:7687
-    NEO4J_USERNAME=your-neo4j-username
-    NEO4J_PASSWORD=NEO4J_USERNAME=your-neo4j-password
-   ```
+```
+ OPENAI_API_KEY=your-openai-api-key
+ NEO4J_URI=neo4j_uri ex : bolt://localhost:7687
+ NEO4J_USERNAME=your-neo4j-username
+ NEO4J_PASSWORD=NEO4J_USERNAME=your-neo4j-password
+```
 
 5. # TODO
 
