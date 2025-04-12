@@ -39,3 +39,4 @@ print(f"Recall: {recall}")
 
 
 # TODO: Add configurations for community and politifact based on the user input
+## should i add frontend for this?

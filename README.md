@@ -11,7 +11,13 @@ Community Notes, a crowdsourced fact- checking system on Twitter/X, offers conte
 2. Install APOC plugin and follow their instruction
 https://neo4j.com/docs/apoc/5/installation/?_gl=1*1gdaha5*_ga*MTk0MDk5NjkzNy4xNzQxNjUyMjM2*_ga_DZP8Z65KK4*MTc0MTY1MjIzNC4xLjEuMTc0MTY1NTIyNi4wLjAuMA..
 
-3. (optional) if there is problem with APOC, you can add the following lines to your `neo4j.conf` file:
+3. create 2 database 
+```
+- community
+- politifact
+```
+
+(optional) if there is problem with APOC, you can add the following lines to your `neo4j.conf` file:
 
 ```
 dbms.security.procedures.unrestricted=apoc.*
@@ -54,5 +60,15 @@ pip install -r requirements.txt
  NEO4J_PASSWORD=NEO4J_USERNAME=your-neo4j-password
 ```
 
-5. # TODO
 
+5. (draft: fix this later) to build the knowledge graph, run the following command:
+
+```
+python3 -m BuildGraph.py 
+```
+
+6. (draft: fix this later) to verify the knowledge graph, run the following command:
+
+```
+python3 -m Application.py 
+```
