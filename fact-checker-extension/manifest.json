@@ -1,0 +1,17 @@
+
+
+{ 
+  "manifest_version": 3, 
+  "name": "Fact checker", 
+  "description": "Hi, this is Fact checker extension. It helps you to check the fact of the news you read.",
+  "version": "0.1.0", 
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "permissions": [ "activeTab"],
+  "host_permissions": ["*://*/*"],
+  "action": { 
+    "default_popup": "index.html" 
+  } 
+}

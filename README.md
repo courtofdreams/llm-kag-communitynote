@@ -72,3 +72,15 @@ python3 -m BuildGraph.py
 ```
 python3 -m Application.py 
 ```
+
+
+-- Mongo --
+docker run -d --name community-note-mongo
+-p 27017:27017
+-e MONGO_INITDB_ROOT_USERNAME=root
+-e MONGO_INITDB_ROOT_PASSWORD=password
+mongo:latest
+
+mongosh --username root --password password
+
+mongodb://root:password@0.0.0.0:27017/

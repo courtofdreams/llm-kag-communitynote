@@ -1,29 +1,39 @@
-from KnowledgeAgent import KnowledgeAgent
+from FactCheckAgent import FactCheckAgent
 from KnowledgeGraphService import KnowledgeGraphService, Graph
 import json
 import os
 from tqdm import tqdm
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from MongoDBService import MongoDBService
  
-kg_service = KnowledgeGraphService(0.1,"gpt-4o-2024-08-06")
-agent = KnowledgeAgent(kg_service=kg_service)
+databaseName = "community-note-mongo"
+collectionName = "community"
+mongodbUri = "mongodb://root:password@0.0.0.0:27017/"
+mongo_service = MongoDBService(mongodbUri, databaseName, collectionName)
+model = "gpt-4-turbo"
+temperature = 0
+kg_service = KnowledgeGraphService(temperature,model)
+agent = FactCheckAgent(kg_service=kg_service,mongo_service=mongo_service,temperature=temperature,model_name=model)
 
 ## For testing purposes, we will use the politifact dataset
 gold_answers = []
 questions = []
-for file in os.listdir("data"):
-    if file.endswith(".json"):
-        with open(os.path.join("data", file), "r") as f:
-            data = json.load(f)  
-            if isinstance(data, dict):
-                questions.append(data["question"])
-                gold_answers.append(data["is_factual"])
-            else:
-                raise ValueError("Expected a JSON object, but got something else.")
+
+file_path = "data/data.json"
+with open(file_path, "r") as file:
+    data = json.load(file)
+
+# Print the data
+print(data)
+
+# Example: Access individual questions and answers
+for item in data:
+    questions.append(item["question"])
+    gold_answers.append(item["is_factual"])
 
 system_answers = []
 for question in tqdm(questions):
-    system_answer = agent.answer_query(question, Graph.COMMUNITY)
+    system_answer = agent.get_fact_for_verdict(question, Graph.COMMUNITY)
     system_answers.append(system_answer["is_factual"])
     print(f"System Answer: {system_answer["answer"]}")
     

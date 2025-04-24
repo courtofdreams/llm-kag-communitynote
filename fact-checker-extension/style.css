@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    width: 350px;
+    height: 500px;
+    padding: 10px 10px;
+    font-family: Arial, Helvetica, san-serif;
+}
+
+
+.wrapper {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(131.83deg, #FFFAFA 0%, #3895e2 99.21%);
+    width: 95%;
+    text-align: center;
+    height: 95%;
+    border-radius: 16px;
+    position: relative;
+}
+
+
+.item::before {
+    position: absolute;
+    content: "";
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    background-image: linear-gradient(312.25deg, #FFC4BC 0%, rgba(255, 255, 255, 0) 66.19%);
+    z-index: -1;
+    border-radius: 18px;
+}
+
+.inner {
+    background-color: #fff;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 250px;
+    box-shadow: 0 40px 80px #FBE4E0;
+    border-radius: 14px;
+}
+
+.name {
+    font-size: 15px;
+    margin: 0;
+}
+
+
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    background: #eee;
+}
+
+.container:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.container .spinner-frame {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    border: 5px solid #fff;
+    padding: 10px;
+}
+
+.container .spinner-frame .spinner-cover {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+}
+
+.container .spinner-frame .spinner-bar {
+    background: #29d;
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 100% 0 0 0;
+    -webkit-animation: spinny 2s linear infinite;
+    transform-origin: 100% 100%;
+}
+@-webkit-keyframes spinny {
+    0% {
+        transform: rotate(0deg);
+        background: #29d;
+    }
+    50% {
+        transform: rotate(180deg);
+        background: #00427c;
+    }
+    100% {
+        transform: rotate(360deg);
+        background: #29d;
+    }
+}
