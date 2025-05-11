@@ -2,77 +2,26 @@
 
 from KnowledgeGraphService import KnowledgeGraphService, Graph
 
-kg_service = KnowledgeGraphService(0.1,"gpt-4o-2024-08-06")
 
-community_note_data = """
-Elon Musk, born in South Africa in 1971, is a tech entrepreneur best known for founding SpaceX, cofounding PayPal, and leading Tesla. He became the world’s richest person by 2025 with a net worth of $393 billion and also acquired Twitter (renamed X) in 2022.
-"""
+kg_service = KnowledgeGraphService(0.1,"gpt-4.1-nano")
+
+# community_note_data = """
+# Elon Musk, born in South Africa in 1971, is a tech entrepreneur best known for founding SpaceX, cofounding PayPal, and leading Tesla. He became the world’s richest person by 2025 with a net worth of $393 billion and also acquired Twitter (renamed X) in 2022.
+# """
 
 politifact_data = """
-Elon Musk (born June 28, 1971, Pretoria, South Africa) is a South African-born American entrepreneur who cofounded the electronic-payment firm PayPal and formed SpaceX, maker of launch vehicles and spacecraft. He was also one of the first significant investors in, as well as chief executive officer of, the electric car manufacturer Tesla. In addition, Musk acquired Twitter (later X) in 2022. Musk leads the Department of Government Efficiency (DOGE) in U.S. Pres. Donald Trump’s second administration. Musk is the world’s richest person, with a net worth of $393 billion, as of 2025.
+Since 2012, Donald Trump and many other Republicans have claimed there was substantial voter fraud in US elections and that, if not for that fraud, Trump would have won the popular vote in the 2016 election (he lost by 2,868,686 million votes), and would have won the 2020 election (he lost by 7,052,770 million votes) and be president today.
 
-Early life
-Musk was born to a South African father and a Canadian mother. He displayed an early talent for computers and entrepreneurship. At age 12 he created a video game and sold it to a computer magazine. In 1988, after obtaining a Canadian passport, Musk left South Africa because he was unwilling to support apartheid through compulsory military service and because he sought the greater economic opportunities available in the United States.
+To try to gain an objective view of the election and voter fraud claims, this section charts all election and voter fraud convictions in US elections between 2016 and 2020.
 
-PayPal and SpaceX
-Musk attended Queen’s University in Kingston, Ontario, and in 1992 he transferred to the University of Pennsylvania, Philadelphia, where he received bachelor’s degrees in physics and economics in 1997. He enrolled in graduate school in physics at Stanford University in California, but he left after only two days because he felt that the Internet had much more potential to change society than work in physics. In 1995 he founded Zip2, a company that provided maps and business directories to online newspapers. In 1999 Zip2 was bought by the computer manufacturer Compaq for $307 million, and Musk then founded an online financial services company, X.com, which later became PayPal, which specialized in transferring money online. The online auction eBay bought PayPal in 2002 for $1.5 billion.
+There have been 306 election and voter fraud convictions to date – including fraudulently voting and registering to vote, false declaration of candidacy, and facilitating or attempting to vote illegally. Included are convictions from the 2016, 2018, and 2020 federal elections, as well as other types of elections, with a focus on the potential election impact on congressional or presidential election results.
 
-What Do You Think?
-Should Humans Colonize Space?
-Explore the ProCon debate.
+The information comes from online news stories, official court records, the Heritage Foundation Election Fraud Database, and other sources. We have included our own summaries and attempted to add the case number and political party for every case listed. We will continue to look for the information currently listed as “not found.”
 
-Musk was long convinced that for life to survive, humanity has to become a multiplanet species. However, he was dissatisfied with the great expense of rocket launchers. In 2002 he founded Space Exploration Technologies (SpaceX) to make more affordable rockets. Its first two rockets were the Falcon 1 (first launched in 2006) and the larger Falcon 9 (first launched in 2010), which were designed to cost much less than competing rockets. A third rocket, the Falcon Heavy (first launched in 2018), was designed to carry 117,000 pounds (53,000 kg) to orbit, nearly twice as much as its largest competitor, the Boeing Company’s Delta IV Heavy, for one-third the cost. The Falcon 9 and Falcon Heavy eventually dominated the launch vehicle market, and in 2024 more than half of the world’s orbital launches were done by SpaceX.
-
-Video released by spacecraft maker SpaceX celebrating its Dragon capsule, which on May 25, 2012, became the first commercial spacecraft to dock with the International Space Station.
-SpaceX (A Britannica Publishing Partner)
-SpaceX has announced the successor to the Falcon 9 and the Falcon Heavy: the Super Heavy–Starship system. The Super Heavy first stage would be capable of lifting 100,000 kg (220,000 pounds) to low Earth orbit. The payload would be the Starship, a spacecraft designed for providing fast transportation between cities on Earth and building bases on the Moon and Mars.
-
-SpaceX also developed the Dragon spacecraft, which carries supplies to the International Space Station (ISS). Dragon can carry as many as seven astronauts, and it had a crewed flight carrying astronauts Doug Hurley and Robert Behnken to the ISS in 2020. The first test flights of the Super Heavy–Starship system launched in 2020. In addition to being CEO of SpaceX, Musk was also chief designer in building the Falcon rockets, Dragon, and Starship. SpaceX is contracted to build the lander for the astronauts returning to the Moon by 2026 as part of NASA’s Artemis space program.
-
-SpaceX has also developed the Starlink satellite network, which provides Internet service. As of 2025 there are about 7,000 working Starlink satellites, accounting for more than half of all active satellites. Starlink is a megaconstellation, or satellite Internet constellation, with more than three million subscribers as of 2024.
-
-Tesla
-Musk had long been interested in the possibilities of electric cars, and in 2004 he became one of the major funders of Tesla Motors (later renamed Tesla), an electric car company founded by entrepreneurs Martin Eberhard and Marc Tarpenning. In 2006 Tesla introduced its first car, the Roadster, which could travel 245 miles (394 km) on a single charge. Unlike most previous electric vehicles, which Musk thought were stodgy and uninteresting, it was a sports car that could go from 0 to 60 miles (97 km) per hour in less than four seconds. In 2010 the company’s initial public offering raised about $226 million. Two years later Tesla introduced the Model S sedan, which was acclaimed by automotive critics for its performance and design. The company won further praise for its Model X luxury SUV, which went on the market in 2015. The Model 3, a less-expensive vehicle, went into production in 2017 and became the best-selling electric car of all time.
-
-Elon Musk
-Elon Musk, 2014.
-Jerry Lampen—EPA/Shutterstock.com
-Tesla announced several models to be released early in the 2020s, including a semitrailer truck (the Tesla Semi) and a pickup truck, the Cybertruck. Although the Cybertruck was slated for production in 2021, supply chain disruptions, design, and production issues pushed its rollout back two years. By the time Tesla began making Cybertruck deliveries in late 2023, it boasted a reservation backlog of two million vehicles, despite the boxy angular design that excited controversy when it was first unveiled.
-
-Dissatisfied with the projected cost ($68 billion) of a high-speed rail system in California, Musk in 2013 proposed an alternate faster system, the Hyperloop, a pneumatic tube in which a pod carrying 28 passengers would travel the 350 miles (560 km) between Los Angeles and San Francisco in 35 minutes at a top speed of 760 miles (1,220 km) per hour, nearly the speed of sound. Musk claimed that the Hyperloop would cost only $6 billion and that, with the pods departing every two minutes on average, the system could accommodate the six million people who travel that route every year. However, he stated, between running SpaceX and Tesla, he could not devote time to the Hyperloop’s development.
-
-X (formerly Twitter)
-What do you think?
-Does social media spur digital addiction and other ills?
-Explore the ProCon debate
-
-Musk joined the social media service Twitter in 2009, and, as @elonmusk, he became one of the most popular accounts on the site, with more than 85 million followers as of 2022. He expressed reservations about Tesla’s being publicly traded, and in August 2018 he made a series of tweets about taking the company private at a value of $420 per share, noting that he had “secured funding.” (The value of $420 was seen as a joking reference to April 20, a day celebrated by devotees of cannabis.) The following month the U.S. Securities and Exchange Commission (SEC) sued Musk for securities fraud, alleging that the tweets were “false and misleading.” Shortly thereafter Tesla’s board rejected the SEC’s proposed settlement, reportedly because Musk had threatened to resign. However, the news sent Tesla stock plummeting, and a harsher deal was ultimately accepted. Its terms included Musk’s stepping down as chairman for three years, though he was allowed to continue as CEO; his tweets were to be preapproved by Tesla lawyers, and fines of $20 million for both Tesla and Musk were levied.
-
-Musk was critical of Twitter’s commitment to principles of free speech, in light of the company’s content-moderation policies. Early in April 2022, Twitter’s filings with the SEC disclosed that Musk had bought more than 9 percent of the company. Shortly thereafter Twitter announced that Musk would join the company’s board, but Musk decided against that and made a bid for the entire company, at a value of $54.20 a share, for $44 billion. Twitter’s board accepted the deal, which would make him sole owner of the company. Musk stated that his plans for the company included “enhancing the product with new features, making the algorithms open source to increase trust, defeating the spam bots, and authenticating all humans.” In July 2022 Musk announced that he was withdrawing his bid, stating that Twitter had not provided sufficient information about bot accounts and claiming that the company was in “material breach of multiple provisions” of the purchase agreement. Bret Taylor, the chair of Twitter’s board of directors, responded by saying that the company was “committed to closing the transaction on the price and terms agreed upon with Mr. Musk.” Twitter sued Musk to force him to buy the company. In September 2022 Twitter’s shareholders voted to accept Musk’s offer. Facing a legal battle, Musk ultimately proceeded with the deal, and it was completed in October.
-
-Among Musk’s first acts as Twitter’s owner were to lay off about half the company and to allow users to purchase for $8 a month the blue check-mark verification, which had previously been bestowed by Twitter upon notable figures. In addition, he disbanded Twitter’s content-moderation body and reinstated many banned accounts, most notably that of former U.S. president Donald Trump, which had been suspended after the U.S. Capitol attack on January 6, 2021. Advertising revenue fell sharply as many companies withdrew their ads from the platform. Musk changed the name of the company from Twitter to X in July 2023. (Tweets became posts with the change.)
-
-Politics and DOGE
-Musk had described himself as a “moderate Democrat,” but his views became much more right-wing after his purchase of X. He publicly endorsed Republican presidential candidate Donald Trump after an assassination attempt on Trump in July 2024. Through his America Political Action Committee (PAC), he became the country’s largest political donor, giving $288 million to Trump and other Republican candidates.
-
-
-Explore the individuals tapped for key government roles.
-Encyclopædia Britannica, Inc.
-Musk spoke at campaign rallies for Trump and through America PAC set up a sweepstakes in which he would pay $1 million a day through election day to one voter in a key swing state. The action prompted lawsuits alleging that it amounted to paying people to vote, which is illegal.
-
-Trump promised during his campaign that Musk and entrepreneur Vivek Ramaswamy would lead a commission, the Department of Government Efficiency (DOGE, a reference to the cryptocurrency memecoin Dogecoin), charged with making the government more efficient. Musk vowed that in that effort, he would “balance the budget immediately” by cutting $2 trillion in government spending, which would “involve some temporary hardship.”
-
-Ramaswamy left DOGE hours after Trump’s inauguration on January 20, 2025. That same day Trump issued an executive order that set up DOGE inside the United States Digital Service, which was renamed the United States DOGE Service. The order also stated that each federal agency should have a team of at least four DOGE employees. Musk became a “special government employee,” a designation for someone who works for the government on a temporary basis. Many of those involved with DOGE are former or current employees of Musk’s companies.
-
-DOGE immediately went to work. On the afternoon of January 20 a DOGE team took over the office of the director of the Office of Personnel Management (OPM), an agency that manages the federal civil service, and assumed control of key OPM databases. More than two million government employees were emailed a deferred resignation offer. It stated that they would not have to return to their offices if they resigned at the end of September 2025. (The subject line of the email, “Fork in the Road,” was the same as one used in an email Musk sent in 2022, offering resignation to Twitter employees shortly after he took over the service.) DOGE gained access to databases at the Treasury Department’s Bureau of the Fiscal Service, which disburses most of the government’s payments.
-
-Musk announced on X that he and Trump would shut down the U.S. Agency for International Development (USAID), which administers foreign aid. Shortly thereafter USAID’s website was taken down, most of USAID’s 10,000 employees were placed on administrative leave, and programs around the world were suspended. The National Institutes of Health (NIH) announced that it would cut $4 billion of “indirect costs,” which support hospitals and universities of NIH grant recipients. The Institute of Education Sciences, the research division of the Department of Education, had most of its contracts canceled.
-
-DOGE’s actions led to a flurry of lawsuits. Critics of DOGE said that it had precipitated a constitutional crisis, in which the executive branch was violating the separation of powers by not spending the money that Congress had appropriated for agencies such as USAID and NIH. However, Republicans, who controlled Congress, claimed there was nothing unusual in a new administration reviewing government spending.
-
+Please let us know of any voter fraud convictions we have missed.
 """
 
-kg_service.build_graph(community_note_data, Graph.COMMUNITY)
+# kg_service.build_graph(community_note_data, Graph.COMMUNITY)
 kg_service.build_graph(politifact_data, Graph.POLITIFACT)
 
 

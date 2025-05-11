@@ -5,13 +5,12 @@ from langchain_experimental.graph_transformers import LLMGraphTransformer
 from langchain_core.documents import Document
 from langchain_neo4j import Neo4jGraph, GraphCypherQAChain
 from langchain_openai import ChatOpenAI
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_deepseek import ChatDeepSeek
 from langchain_core.prompts import PromptTemplate
 from enum import Enum
+from langchain.chains import LLMChain
 
 class Graph(Enum):
-    COMMUNITY = "community"
+    COMMUNITY = "community3topics"
     POLITIFACT = "politifact"
     BASELINE = "baseline"
     
@@ -22,30 +21,6 @@ class KnowledgeGraphService:
                 raise ValueError("OPENAI_API_KEY environment variable not set.")
             
             self.llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY,temperature=temperature, model_name=model_name)
-
-            # GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-            # if GOOGLE_API_KEY is None:
-            #     raise ValueError("GOOGLE_API_KEY environment variable not set.")
-            
-            # self.llm = ChatGoogleGenerativeAI(
-            #     model="gemini-2.0-flash",
-            #     temperature=0,                  
-            #     max_tokens=None,
-            #     timeout=None,
-            #     max_retries=2,
-            # )
-            
-            # DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
-            # if DEEPSEEK_API_KEY is None:
-            #     raise ValueError("DEEPSEEK_API_KEY environment variable not set.")
-            
-            # self.llm = ChatDeepSeek(
-            #     model="deepseek-chat",
-            #     temperature=0,
-            #     max_tokens=None,
-            #     timeout=None,
-            #     max_retries=2,
-            # )
 
             self.graph_politifact = Neo4jGraph(
                 database=Graph.POLITIFACT.value
@@ -72,7 +47,7 @@ class KnowledgeGraphService:
                 raise ValueError("Invalid config. Choose 'community' or 'politifact'.")   
         
         def build_multiple_graphs(self, data: list, config: Graph):
-            combined_text = '\n'.join(data)
+            combined_text = '\n'.join([doc['note'] for doc in data])
             documents = [Document(page_content=combined_text)]
             graph_documents = self.llm_transformer.convert_to_graph_documents(documents)
             if config == Graph.COMMUNITY:
@@ -112,10 +87,17 @@ class KnowledgeGraphService:
         def get_facts_for_verdict(self, query, config: Graph=Graph.COMMUNITY):
             custom_prompt_template = """
                 check the factuality of the statement and give out the result as yes or no only
-                
+                Rules for Cypher:
+                - Use MATCH for nodes/relationships.
+                - WHERE only for properties (e.g., p.party = 'REPUBLICAN').
+                - Use EXISTS((p)-[:REL]->(c)) correctly.
+                - No backticks.
+                - RETURN clean expressions, e.g., RETURN EXISTS((p)-[:AIM]->(c)).
+
                 Statement: {question}
                 Answer:
             """
+            
             CUSTOM_PROMPT = PromptTemplate(
                 template=custom_prompt_template, input_variables=["question"]
             )
@@ -127,7 +109,7 @@ class KnowledgeGraphService:
                     graph=self.graph_community,
                     qa_prompt=CUSTOM_PROMPT,
                 )
-                result = chain.run({'query':query}) # result = yes
+                result = chain.run({'query': query}) # result = yes
                 return result
             elif config == Graph.POLITIFACT:
                 print(f"Querying {config.value} database with query: {query}")
@@ -140,14 +122,17 @@ class KnowledgeGraphService:
                 )
                 result = chain.run({'query':query})
                 return result
-            elif config == Graph.BASELINE: # TODO baseline = only use the LLM, Need to decide what model to use., this will call openai or xxx directly
-                chain = GraphCypherQAChain.from_llm(
-                    llm=self.llm,
-                    verbose=True,
-                    allow_dangerous_requests=True,
-                    graph=None,
-                    qa_prompt=CUSTOM_PROMPT,
+            elif config == Graph.BASELINE: # Blind Model
+                custom_prompt_template = """
+                check the factuality of the statement and give out the result as yes or no only
+                Statement: {question}
+                Answer:
+                """
+                CUSTOM_PROMPT = PromptTemplate(
+                template=custom_prompt_template, input_variables=["question"]
                 )
+                chain = LLMChain(llm=self.llm, prompt=CUSTOM_PROMPT)
+                result = chain.run({'question':query})
                 return result
             else:    
                 raise ValueError("Invalid config. Choose 'community' or 'politifact'.")        
@@ -155,7 +140,7 @@ class KnowledgeGraphService:
         def get_facts(self, query: str):
             custom_prompt_template = """
                 check the factuality of the statement and give out the result as yes or no based on community graph
-                additionally, give out the reasoning for the answer
+                additionally, give out the reasoning for the answer use the community graph context
                 
                 Statement: {question}
                 Answer:

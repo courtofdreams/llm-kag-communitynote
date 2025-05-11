@@ -6,7 +6,6 @@ from langchain.agents import initialize_agent, AgentType
 from langchain.memory import ConversationBufferMemory
 from TwitterXAPIService import TwitterXAPIService
 from langchain_core.prompts import PromptTemplate
-from langchain.schema.agent import AgentAction, AgentFinish
 
 import os
 
@@ -17,7 +16,6 @@ custom_prompt = PromptTemplate(
     - Answer: yes/no
     - Explanation:
     - Source: Community Note or URL if available
-
     Question: {question}
     """
 )
@@ -26,7 +24,8 @@ custom_prompt = PromptTemplate(
 class FactCheckAgent:
     def __init__(self, kg_service: KnowledgeGraphService, mongo_service: MongoDBService, temperature=0, model_name="gpt-4-turbo"):
         self.kg_service = kg_service
-        self.mongo_service = mongo_service
+        if mongo_service is not None:
+            self.mongo_service = mongo_service
         OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
         if OPENAI_API_KEY is None:
             raise ValueError("OPENAI_API_KEY environment variable not set.")
@@ -57,6 +56,12 @@ class FactCheckAgent:
             memory=self.memory,
             additional_kwargs={"prompt": custom_prompt},
         )
+        
+    def get_facts(self, query: str, config: Graph) -> dict:
+        facts = self.kg_service.get_facts(query)        
+        return {
+                "answer": facts,
+        }
 
     def get_fact_for_verdict(self, query: str, config: Graph) -> dict:
         """
@@ -65,13 +70,13 @@ class FactCheckAgent:
         """
         # Step 1: Query KG for relevant facts
         facts = self.kg_service.get_facts_for_verdict(query, config)        
-        # TODO 
         is_factual = self.answer_extraction(facts)
         return {
                 "answer": facts,
                 "is_factual": is_factual,
                 "source": config
         }
+    
         
     def answer_extraction(self, answer: str) -> bool:
         print(f"Answer: {answer}")
@@ -86,24 +91,21 @@ class FactCheckAgent:
         """
         Retrieve facts for a given Twitter ID.
         """
-        # Step 1: Query MongoDB for relevant facts
         statement = self.twitter_api_service.get_tweet(twitter_id)
-    
         return self.fact_check(statement)
     
     
     def fact_check(self,statement: str) -> str:
-        ## TODO: add mongo data too if possible
         mongo_context = None
-        try:
-            mongo_context = self.mongo_service.search(statement)
-            print(f"MongoDB Context: {mongo_context}")
-        except Exception as e:
-            print(f"Error searching MongoDB: {e}")    
+        if self.mongo_service is not None:
+            try:
+                mongo_context = self.mongo_service.search(statement)
+                print(f"MongoDB Context: {mongo_context}")
+            except Exception as e:
+                print(f"Error searching MongoDB: {e}")    
 
         return self.kg_service.get_facts(statement) 
     
-    ## having agent call will include reasoning for the answer
     def invoke(self, twitter_id: str) -> dict:
         """
         Run the agent with the provided query.

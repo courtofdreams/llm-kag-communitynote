@@ -2,12 +2,13 @@ from flask import Flask, jsonify
 from KnowledgeGraphService import KnowledgeGraphService
 from MongoDBService import MongoDBService
 from FactCheckAgent import FactCheckAgent
+import os
 
 app = Flask(__name__)
 
 databaseName = "community-note-mongo"
 collectionName = "community"
-mongodbUri = "mongodb://root:password@0.0.0.0:27017/"
+mongodbUri = os.getenv("MONGO_DB_URI")
 mongo_service = MongoDBService(mongodbUri, databaseName, collectionName)
 model = "gpt-4-turbo"
 temperature = 0
