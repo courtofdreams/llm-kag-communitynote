@@ -26,7 +26,7 @@ https://neo4j.com/docs/apoc/5/installation/?_gl=1*1gdaha5*_ga*MTk0MDk5NjkzNy4xNz
 3. create 2 database 
 ```
 - community
-- news_articles
+- news_articles or politifact
 ```
 
 (optional) if there is problem with APOC, you can add the following lines to your `neo4j.conf` file:
@@ -79,7 +79,7 @@ TWITTER_ACCESS_TOKEN=
 TWITTER_ACCESS_TOKEN_SECRET=
 ```
 
-5. To build the knowledge graph, run the following command:
+5. Option1: To build the knowledge graph, run the following command:
 
 ```
 python3 -m BuildGraph.py 
@@ -94,6 +94,12 @@ after that, you will be asked enter data file path, you can use the following da
 data/graph_data/mislead_politics.xlsx
 
 
+5. Option2: To build the knowledge graph using .dump file in the `data/database_dump` folder using neo4j Desktop according to [this instruction](https://neo4j.com/docs/desktop-manual/current/operations/create-from-dump/#:~:text=Once%20you%20have%20a%20dump,when%20creating%20a%20new%20DBMS.)
+```
+- community.dump: the dump file for the community database (process all community notes)
+- politifact.dump: the dump file for the news articles database (process only 3 topics)
+- community3topics.dump: the dump file for the community database (process only 3 topics)
+```
 6. to verify the knowledge graph, run the following command:
 
 ```
