@@ -3,15 +3,32 @@
 ## Abstract
 Community Notes, a crowdsourced fact- checking system on Twitter/X, offers contextual annotations to potentially misleading posts as an alternative to expert and automate fact- checking. This study explores the feasibility of using published Community Notes as a standalone fact-checking source. We hypothesize that Community Notes, as a curated knowledge base, can improve fact-checking efficiency without compromising accuracy. Un-like large-scale fact-checking systems, Community Notes offers a targeted approach that captures recurring misinformation topics. To test this, we will create a knowledge graph (KG) from Community Notes using large language models (LLMs) and integrate it into an automated fact-checking pipeline, applying Knowledge-Augmented Generation (KAG) and Retrieval-Augmented Generation (RAG) techniques. We will evaluate the system by com- paring its outputs to established fact-checking datasets like DBPedia, . This report outlines the literature review, data collection, preliminary experiments, methodology, evaluation strategy, and project tasks.
 
-## Files
-- `BuildGraph.py`: This file is used to build the knowledge graph from the Community Notes data.
-- `AnalyzeAccuracy.py`: This file is used to analyze the accuracy of the knowledge graph.
-- `NotesProcessor.py`: This file is a class that processes the Community Notes files and extracts relevant information.
-- `MongoDBService.py`: This file is used to connect to the MongoDB database and perform operations on it.
-- `KnowledgeGraphService.py`: This file is used to connect to the Neo4j database and perform operations on it.
-- `FactCheckAgent.py`: this file is used to create a fact-checking agent that uses the knowledge graph and the Community Notes data to perform fact-checking.
-- `API.py`: this file is used to create a REST API for the fact-checking agent.
+## Files & Directories
+```
+llm-kag-communitynote/
+├── fact-checker-extension/          # Chrome extension for fact-checking (only for fun and application testing)
+├── data/
+│   ├──database_dump/               # Neo4j database dump files
+│       ├── community.dump            # Dump file for the community database (process all community notes)  
+│       ├── politifact.dump           # Dump file for the news articles database (process only 3 topics)
+│       └── community3topics.dump     # Dump file for the community database (process only 3 topics)               
+│   ├── graph_data/                    # Excel files for building the knowledge graph              
+│       ├── 3toics_notes.xlsx         # Excel file for the 3 topics, community notes
+│       ├── 3topics_url.json          # JSON contains for url for web scrapping only
+│       ├── mislead_politics.xlsx      # Excel file for the misleading community notes, topic politics
+│       ├── nonmis_politics.xlsx       # Excel file for the nonmislead community notes, topic politics
+│   ├── query/                          # Query files for verifying the knowledge graph
+│   ├── result_data/                    # Result data for verifying the knowledge graph
+├── BuildGraph.py              # Python script to build the knowledge graph
+├── AnalyzeAccuracy.py         # Python script to analyze the accuracy of the knowledge graph
+├── NotesProcessor.py          # Python class to process the Community Notes files
+├── MongoDBService.py          # Python class to connect to the MongoDB database
+├── KnowledgeGraphService.py  # Python class to connect to the Neo4j database
+├── FactCheckAgent.py          # Python script to create a fact-checking agent
+├── API.py                     # Python script to create a REST API for the fact-checking agent and extension
+├── requirements.txt              # Python dependencies
 
+```
 
 ## Published Knowledge Graph from X's Community Notes
 Please provide us with your email address of Neo4j Aura if you want to access the knowledge graph. We will send you the invitation link to access the knowledge graph.
